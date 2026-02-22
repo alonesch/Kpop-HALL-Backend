@@ -1,0 +1,54 @@
+# =============================
+# .NET
+# =============================
+
+bin/
+obj/
+out/
+
+# Rider / VS / VSCode
+.vs/
+.idea/
+.vscode/
+
+# User specific
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# NuGet
+packages/
+*.nupkg
+
+# Test Results
+TestResults/
+
+# Entity Framework migrations snapshot backups
+*.db
+
+# Docker
+docker-compose.override.yml
+
+# Secrets
+appsettings.Local.json
+appsettings.Production.json
+appsettings.*.local.json
+
+# User Secrets
+secrets.json
+
+# Publish output
+publish/
+
+# Coverage
+coverage/
+*.coverage
+*.coveragexml
