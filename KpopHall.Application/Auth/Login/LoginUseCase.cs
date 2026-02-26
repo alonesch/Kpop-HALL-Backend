@@ -5,12 +5,12 @@ namespace KpopHall.Application.Auth.Login;
 
 public class LoginUseCase
 {
-    private readonly IUserRepository _userRepository;
+    private readonly IUsersRepository _userRepository;
     private readonly IPasswordHasher _passwordHasher;
     private readonly IJwtTokenGenerator _tokenGenerator;
 
     public LoginUseCase(
-        IUserRepository userRepository,
+        IUsersRepository userRepository,
         IPasswordHasher passwordHasher,
         IJwtTokenGenerator tokenGenerator)
     {

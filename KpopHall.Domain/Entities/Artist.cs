@@ -4,15 +4,20 @@ namespace KpopHall.Domain.Entities;
 
 public class Artist
 {
-    public int Id { get; set; }
-    public string Name { get; set; } = null!;
+    public int Id { get; private set; }
+    public string Name { get; private set; } = null!;
     protected Artist() { }
-    public Artist (string name)
+    public Artist(string name)
     {
         SetName(name);
     }
-    
-    private void SetName(string name)
+
+    public void Rename(string name)
+    {
+        SetName(name);
+    }
+
+    public void SetName(string name)
     {
         if (string.IsNullOrWhiteSpace(name))
             throw new DomainException("Artist name cannot be empty.");

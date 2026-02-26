@@ -3,14 +3,16 @@
     <File Path=".gitignore" />
     <File Path="README.md" />
   </Folder>
+
   <Folder Name="/src/">
-    <Project Path="F:/Projetos/Kpop! HALL/Back/KpopHall.Api/KpopHall.Api.csproj" />
-    <Project Path="F:/Projetos/Kpop! HALL/Back/KpopHall.Application/KpopHall.Application.csproj" />
-    <Project Path="F:/Projetos/Kpop! HALL/Back/KpopHall.Domain/KpopHall.Domain.csproj" />
-    <Project Path="F:/Projetos/Kpop! HALL/Back/KpopHall.Infrastructure/KpopHall.Infrastructure.csproj" />
+    <Project Path="KpopHall.Api/KpopHall.Api.csproj" />
+    <Project Path="KpopHall.Application/KpopHall.Application.csproj" />
+    <Project Path="KpopHall.Domain/KpopHall.Domain.csproj" />
+    <Project Path="KpopHall.Infrastructure/KpopHall.Infrastructure.csproj" />
   </Folder>
+
   <Folder Name="/tests/">
-    <Project Path="F:/Projetos/Kpop! HALL/Back/KpopHall.Application.Test/KpopHall.Application.Test.csproj" />
-    <Project Path="F:/Projetos/Kpop! HALL/Back/KpopHall.Domain.Tests/KpopHall.Domain.Tests.csproj" />
+    <Project Path="KpopHall.Application.Test/KpopHall.Application.Test.csproj" />
+    <Project Path="KpopHall.Domain.Tests/KpopHall.Domain.Tests.csproj" />
   </Folder>
 </Solution>

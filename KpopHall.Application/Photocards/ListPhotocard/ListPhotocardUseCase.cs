@@ -5,12 +5,12 @@ namespace KpopHall.Application.Photocards.ListPhotocard;
 
 public class  ListPhotocardUseCase
 {
-    private readonly IPhotoCardRepository _photoCardRepository;
-    private readonly IAlbumRepository _albumRepository;
-    private readonly IArtistRepository _artistRepository;
+    private readonly IPhotoCardsRepository _photoCardRepository;
+    private readonly IAlbumsRepository _albumRepository;
+    private readonly IArtistsRepository _artistRepository;
 
 
-    public ListPhotocardUseCase(IPhotoCardRepository photoCardRepository, IAlbumRepository albumRepository, IArtistRepository artistRepository)
+    public ListPhotocardUseCase(IPhotoCardsRepository photoCardRepository, IAlbumsRepository albumRepository, IArtistsRepository artistRepository)
     {
         _photoCardRepository = photoCardRepository;
         _albumRepository = albumRepository;

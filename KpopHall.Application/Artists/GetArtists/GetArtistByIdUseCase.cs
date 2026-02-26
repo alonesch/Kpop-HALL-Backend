@@ -5,9 +5,9 @@ namespace KpopHall.Application.Artists.GetArtistById;
 
 public class GetArtistByIdUseCase
 {
-    private readonly IArtistRepository repository;
+    private readonly IArtistsRepository repository;
 
-    public GetArtistByIdUseCase(IArtistRepository repository)
+    public GetArtistByIdUseCase(IArtistsRepository repository)
     {
         this.repository = repository;
     }

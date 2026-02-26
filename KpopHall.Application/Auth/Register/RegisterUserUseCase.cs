@@ -6,11 +6,11 @@ namespace KpopHall.Application.Auth.Register;
 
 public class RegisterUserUseCase
 {
-    private readonly IUserRepository _userRepository;
+    private readonly IUsersRepository _userRepository;
     private readonly IPasswordHasher _passwordHasher;
 
     public RegisterUserUseCase(
-        IUserRepository userRepository,
+        IUsersRepository userRepository,
         IPasswordHasher passwordHasher)
     {
         _userRepository = userRepository;

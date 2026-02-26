@@ -2,7 +2,7 @@
 
 namespace KpopHall.Application.Interfaces;
 
-public interface IPhotoCardRepository
+public interface IPhotoCardsRepository
 {
     Task AddAsync(Photocard photocard);
     Task<List<Photocard>> GetByAlbumIdAsync(int albumId);

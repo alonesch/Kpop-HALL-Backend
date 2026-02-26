@@ -5,10 +5,10 @@ namespace KpopHall.Application.Albums.ListAlbums;
 
 public class ListAlbumsUseCase
 {
-    private readonly IAlbumRepository _albumRepository;
-    private readonly IArtistRepository _artistRepository;
+    private readonly IAlbumsRepository _albumRepository;
+    private readonly IArtistsRepository _artistRepository;
 
-    public ListAlbumsUseCase(IAlbumRepository albumRepository, IArtistRepository artistRepository)
+    public ListAlbumsUseCase(IAlbumsRepository albumRepository, IArtistsRepository artistRepository)
     {
         _albumRepository = albumRepository;
         _artistRepository = artistRepository;

@@ -2,7 +2,7 @@
 
 namespace KpopHall.Application.Interfaces;
 
-public interface IUserRepository
+public interface IUsersRepository
 {
     Task AddAsync(User user);
     Task<User?> GetByEmailAsync(string email);

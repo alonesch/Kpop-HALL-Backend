@@ -6,10 +6,10 @@ namespace KpopHall.Application.Albums.GetAlbum;
 
 public class GetAlbumByIdUseCase
 {
-    private readonly IAlbumRepository _albumRepository;
-    private readonly IArtistRepository _artistRepository;
+    private readonly IAlbumsRepository _albumRepository;
+    private readonly IArtistsRepository _artistRepository;
 
-    public GetAlbumByIdUseCase(IAlbumRepository albumRepository, IArtistRepository artistRepository)
+    public GetAlbumByIdUseCase(IAlbumsRepository albumRepository, IArtistsRepository artistRepository)
     {
         _albumRepository = albumRepository;
         _artistRepository = artistRepository;

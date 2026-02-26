@@ -2,7 +2,7 @@
 
 namespace KpopHall.Application.Interfaces;
 
-public interface IAlbumRepository
+public interface IAlbumsRepository
 {
     Task AddAsync(Album album);
     Task<bool> ExistsByTitleAndArtistIdAsync(string title, int artistId);

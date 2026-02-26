@@ -6,9 +6,9 @@ namespace KpopHall.Application.Artists.CreateArtist;
 
 public class CreateArtistUseCase
 {
-    private readonly IArtistRepository _repository;
+    private readonly IArtistsRepository _repository;
 
-    public CreateArtistUseCase(IArtistRepository repository)
+    public CreateArtistUseCase(IArtistsRepository repository)
     {
         _repository = repository;
     }
