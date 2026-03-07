@@ -41,4 +41,9 @@ public class UsersRepository : IUsersRepository
         return await _context.Users
             .AnyAsync(u => u.Username == username);
     }
+    public async Task<User?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    {
+        return await _context.Users
+            .FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
+    }
 }

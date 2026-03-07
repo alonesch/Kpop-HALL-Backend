@@ -14,6 +14,7 @@ public class KpopHallDbContext : DbContext
     public DbSet<Photocard> Photocards => Set<Photocard>();
     public DbSet<User> Users => Set<User>();
     public DbSet<Member> Members => Set<Member>();
+    public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -115,6 +116,19 @@ public class KpopHallDbContext : DbContext
             entity.HasOne<Artist>()
                 .WithMany()
                 .HasForeignKey(m => m.ArtistId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+        
+        modelBuilder.Entity<RefreshToken>(entity =>
+        {
+            entity.HasKey(rt => rt.Id);
+            entity.Property(rt => rt.Token)
+                .IsRequired();
+            entity.HasIndex(rt => rt.Token)
+                .IsUnique();
+            entity.HasOne(rt => rt.User)
+                .WithMany(u => u.RefreshTokens)
+                .HasForeignKey(rt => rt.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
         });
     }
