@@ -16,6 +16,9 @@ public class User
 
     public DateTime CreatedAt { get; private set; }
 
+    public bool HasSeenTour { get; private set; }
+    public ICollection<RefreshToken> RefreshTokens { get; private set; } = new List<RefreshToken>();
+
     protected User() { }
 
     public User(string username, string email, string passwordHash, string role = "User")

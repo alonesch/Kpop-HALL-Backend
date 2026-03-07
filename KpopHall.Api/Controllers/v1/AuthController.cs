@@ -1,5 +1,7 @@
 ﻿using KpopHall.Application.Auth.Login;
+using KpopHall.Application.Auth.RefreshUser;
 using KpopHall.Application.Auth.Register;
+using KpopHall.Application.RefreshTokens;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KpopHall.Api.Controllers.v1;
@@ -34,5 +36,15 @@ public class AuthController : ControllerBase
             request.Password);
 
         return Ok(new { token });
+    }
+    
+    [HttpPost("refresh")]
+    public async Task<IActionResult> Refresh(
+    [FromBody] RefreshUserRequest request,
+    [FromServices] RefreshUserUseCase useCase,
+    CancellationToken cancellationToken)
+    {
+        var result = await useCase.ExecuteAsync(request, cancellationToken);
+        return Ok(result);
     }
 }
