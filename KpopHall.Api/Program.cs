@@ -9,14 +9,17 @@ using KpopHall.Application.Artists.UpdateArtists;
 using KpopHall.Application.Auth.Login;
 using KpopHall.Application.Auth.Register;
 using KpopHall.Application.Interfaces;
+using KpopHall.Application.Members.CreateMember;
+using KpopHall.Application.Members.GetMember;
+using KpopHall.Application.Members.ListMember;
 using KpopHall.Application.Photocards.CreatePhotocard;
 using KpopHall.Application.Photocards.GetPhotocard;
 using KpopHall.Application.Photocards.ListPhotocard;
-using KpopHall.Infrastructure.Persistence.Repositories;
 using KpopHall.Infrastructure.Persistence;
+using KpopHall.Infrastructure.Persistence.Repositories;
 using KpopHall.Infrastructure.Security;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -50,6 +53,10 @@ builder.Services.AddScoped<IArtistsRepository, ArtistsRepository>();
 builder.Services.AddScoped<RegisterUserUseCase>();
 builder.Services.AddScoped<LoginUseCase>();
 builder.Services.AddScoped<UpdateArtistUseCase>();
+builder.Services.AddScoped<IMembersRepository, MembersRepository>();
+builder.Services.AddScoped<CreateMemberUseCase>();
+builder.Services.AddScoped<ListMemberUseCase>();
+builder.Services.AddScoped<GetMemberByIdUseCase>();
 
 ///<summary>
 ///If you're testing on localhost and don't want to create a database, 

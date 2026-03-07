@@ -2,7 +2,8 @@
 
 public class CreatePhotocardRequest
 {
-    public string Name { get; set; } = null!;
+    public Guid MemberId { get; set; }
+    public string Version { get; set; } = null!;
 
     public DistributionContextRequest? DistributionContext { get; set; }
 }

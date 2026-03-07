@@ -42,16 +42,16 @@ public class ArtistController : ControllerBase
         return Ok(result);
     }
 
-    [HttpGet("{id:int}")]
-    public async Task<IActionResult> GetById(int id)
+    [HttpGet("{id:Guid}")]
+    public async Task<IActionResult> GetById(Guid id)
     {
         var result = await _getByIdUseCase.ExecuteAsync(id);
         return Ok(result);
     }
 
     
-    [HttpPut("{id}")]
-    public async Task<IActionResult> Update([FromRoute]int id, [FromBody]UpdateArtistRequest request)
+    [HttpPut("{id:Guid}")]
+    public async Task<IActionResult> Update([FromRoute]Guid id, [FromBody]UpdateArtistRequest request)
     {
         var response = await _updateUseCase.ExecuteAsync(id, request);
         return Ok(response);

@@ -32,7 +32,7 @@ public class ArtistsRepository : IArtistsRepository
             .ToListAsync();
     }
 
-    public async Task<Artist?> GetByIdAsync(int id)
+    public async Task<Artist?> GetByIdAsync(Guid id)
     {
         return await _context.Artists
             .FirstOrDefaultAsync(a => a.Id == id);

@@ -19,20 +19,20 @@ public class AlbumsRepository : IAlbumsRepository
         await _context.SaveChangesAsync();
     }
     
-    public async Task<bool> ExistsByTitleAndArtistIdAsync (string title, int artistId)
+    public async Task<bool> ExistsByTitleAndArtistIdAsync (string title, Guid artistId)
     {
         return await _context.Albums
             .AnyAsync(a => a.Title == title && a.ArtistId == artistId);
     }
 
-    public async Task<List<Album>> GetByArtistIdAsync(int artistId)
+    public async Task<List<Album>> GetByArtistIdAsync(Guid artistId)
     {
         return await _context.Albums
             .Where(a => a.ArtistId == artistId)
             .ToListAsync();
     }
 
-    public async Task<Album?> GetByIdAsync(int id)
+    public async Task<Album?> GetByIdAsync(Guid id)
     {
         return await _context.Albums
             .FirstOrDefaultAsync(a => a.Id == id);

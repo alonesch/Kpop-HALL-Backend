@@ -5,21 +5,23 @@ namespace KpopHall.Domain.Entities;
 
 public class Photocard
 {
-    public int Id { get; private set; }
-    public int AlbumId { get; private set; }
-    public string Name { get; private set; } =null!;
+    public Guid Id { get; private set; }
+    public Guid AlbumId { get; private set; }
+    public Guid MemberId { get; private set; }
+    public string Version { get; private set; } =null!;
     public DistributionContext? DistributionContext { get; private set; }
     protected Photocard() { }
-    public Photocard(int albumId, string name, DistributionContext? distributionContext = null)
+    public Photocard(Guid albumId,Guid memberId, string version, DistributionContext? distributionContext = null)
     {
-        if (string.IsNullOrWhiteSpace(name))
+        if (string.IsNullOrWhiteSpace(version))
             throw new DomainException("Photocard name cannot be empty.");
 
-        if (albumId <= 0)
+        if (albumId <= Guid.Empty)
             throw new DomainException("Photocard must belong to a valid album.");
 
-        Name = name.Trim();
+        Version = version.Trim();
         AlbumId = albumId;
+        MemberId = memberId;
         DistributionContext = distributionContext;
     }
 

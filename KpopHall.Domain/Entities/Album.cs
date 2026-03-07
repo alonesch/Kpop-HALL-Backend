@@ -4,12 +4,12 @@ namespace KpopHall.Domain.Entities;
 
 public class Album
 {
-    public int Id { get; private set; }
+    public Guid Id { get; private set; }
     public string Title { get; private set; } = null!;
     public int Year { get; private set; }
-    public int ArtistId { get; private set; }
+    public Guid ArtistId { get; private set; }
     protected Album() { }
-    public Album(string title, int year, int artistId)
+    public Album(string title, int year, Guid artistId)
     {
         ValidateTitle(title);
         ValidateYear(year);
@@ -38,9 +38,9 @@ public class Album
             throw new DomainException("Year must be greater than zero.");
     }
 
-    private void ValidateArtistId(int artistid)
+    private void ValidateArtistId(Guid artistid)
     {
-        if (artistid <= 0)
+        if (artistid <= Guid.Empty)
             throw new DomainException("ArtistId must be greater than zero");
     }
 }

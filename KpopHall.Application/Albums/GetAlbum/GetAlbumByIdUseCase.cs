@@ -15,7 +15,7 @@ public class GetAlbumByIdUseCase
         _artistRepository = artistRepository;
     }
 
-    public async Task<GetAlbumByIdResponse> ExecuteAsync(int artistId, int albumId)
+    public async Task<GetAlbumByIdResponse> ExecuteAsync(Guid artistId, Guid albumId)
     {
         var artist = await _artistRepository.GetByIdAsync(artistId);
         if (artist == null)

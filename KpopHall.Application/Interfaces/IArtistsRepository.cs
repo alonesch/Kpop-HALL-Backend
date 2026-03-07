@@ -7,7 +7,7 @@ public interface IArtistsRepository
     Task AddAsync(Artist artist);
     Task<bool> ExistsByNameAsync (string name);
     Task<List<Artist>> GetAllAsync();
-    Task<Artist?> GetByIdAsync(int id);
+    Task<Artist?> GetByIdAsync(Guid id);
     Task UpdateAsync(Artist artist);
 
 }

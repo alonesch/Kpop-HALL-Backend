@@ -19,7 +19,7 @@ public class PhotocardsRepository : IPhotoCardsRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task<List<Photocard>> GetByAlbumIdAsync(int albumId)
+    public async Task<List<Photocard>> GetByAlbumIdAsync(Guid albumId)
     {
         return await _context.Photocards
             .AsNoTracking()
@@ -27,18 +27,41 @@ public class PhotocardsRepository : IPhotoCardsRepository
             .ToListAsync();
     }
 
-    public async Task<Photocard?> GetByIdAsync(int id)
+    public async Task<List<Photocard>> GetAllAsync()
+    {
+        return await _context.Photocards
+            .AsNoTracking()
+            .ToListAsync();
+    }
+
+    public async Task<Photocard?> GetByIdAsync(Guid id)
     {
         return await _context.Photocards
             .AsNoTracking()
             .FirstOrDefaultAsync(p => p.Id == id);
     }
 
-    public async Task<bool> ExistsByNameAndAlbumIdAsync(string name, int albumId)
+    public async Task<bool> ExistsByVersionAndAlbumIdAsync(string version, Guid albumId)
     {
         return await _context.Photocards
-            .AnyAsync(p => p.Name == name && p.AlbumId == albumId);
+            .AnyAsync(p => p.Version == version && p.AlbumId == albumId);
     }
 
+    public async Task<List<Photocard>> GetByArtistIdAsync(Guid artistId)
+    {
+        return await _context.Photocards
+            .AsNoTracking()
+            .Where(p => _context.Albums
+                .Any(a => a.Id == p.AlbumId && a.ArtistId == artistId))
+            .ToListAsync();
+    }
+
+    public async Task<List<Photocard>> GetByMemberIdAsync(Guid memberId)
+    {
+        return await _context.Photocards
+            .AsNoTracking()
+            .Where(p => p.MemberId == memberId)
+            .ToListAsync();
+    }
 
 }

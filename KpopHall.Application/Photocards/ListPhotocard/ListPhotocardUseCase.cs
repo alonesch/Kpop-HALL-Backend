@@ -1,39 +1,54 @@
 ﻿using KpopHall.Application.Interfaces;
 using KpopHall.Domain.Exceptions;
-
 namespace KpopHall.Application.Photocards.ListPhotocard;
 
-public class  ListPhotocardUseCase
+public class ListPhotocardUseCase
 {
     private readonly IPhotoCardsRepository _photoCardRepository;
     private readonly IAlbumsRepository _albumRepository;
     private readonly IArtistsRepository _artistRepository;
-
-
-    public ListPhotocardUseCase(IPhotoCardsRepository photoCardRepository, IAlbumsRepository albumRepository, IArtistsRepository artistRepository)
+    public ListPhotocardUseCase(
+        IPhotoCardsRepository photoCardRepository,
+        IAlbumsRepository albumRepository,
+        IArtistsRepository artistRepository)
     {
         _photoCardRepository = photoCardRepository;
         _albumRepository = albumRepository;
         _artistRepository = artistRepository;
     }
-
-    public async Task<List<ListPhotocardResponse>>ExecuteAsync(int artistId, int albumId)
+    public async Task<List<ListPhotocardResponse>> ExecuteAsync()
+    {
+        var photocards = await _photoCardRepository.GetAllAsync();
+        return photocards.Select(Map).ToList();
+    }
+    public async Task<List<ListPhotocardResponse>> ExecuteByAlbumAsync(Guid albumId)
+    {
+        var album = await _albumRepository.GetByIdAsync(albumId);
+        if (album == null)
+            throw new DomainException("Album not found.");
+        var photocards = await _photoCardRepository.GetByAlbumIdAsync(albumId);
+        return photocards.Select(Map).ToList();
+    }
+    public async Task<List<ListPhotocardResponse>> ExecuteByArtistAsync(Guid artistId)
     {
         var artist = await _artistRepository.GetByIdAsync(artistId);
         if (artist == null)
             throw new DomainException("Artist not found.");
-
-        var album = await _albumRepository.GetByIdAsync(albumId);
-        if (album == null || album.ArtistId != artistId)
-            throw new DomainException("Album not found.");
-
-        var photocards = await _photoCardRepository.GetByAlbumIdAsync(albumId);
-
-        return photocards.Select(p => new ListPhotocardResponse
-        {
-            Id = p.Id,
-            Name = p.Name,
-            IsIrregular = p.IsIrregular
-        }).ToList();
+        var photocards = await _photoCardRepository.GetByArtistIdAsync(artistId);
+        return photocards.Select(Map).ToList();
     }
+    public async Task<List<ListPhotocardResponse>> ExecuteByMemberAsync(Guid memberId)
+    {
+        var photocards = await _photoCardRepository.GetByMemberIdAsync(memberId);
+        if (photocards == null || photocards.Count == 0)
+            throw new DomainException("No photocards found for this member.");
+        return photocards.Select(Map).ToList();
+    }
+    private static ListPhotocardResponse Map(KpopHall.Domain.Entities.Photocard p) => new()
+    {
+        Id = p.Id,
+        Version = p.Version,
+        MemberId = p.MemberId,
+        IsIrregular = p.IsIrregular
+    };
 }

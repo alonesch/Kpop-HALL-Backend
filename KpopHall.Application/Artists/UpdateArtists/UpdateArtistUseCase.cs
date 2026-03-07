@@ -12,7 +12,7 @@ public class UpdateArtistUseCase
         this.repository = repository;
     }
 
-    public async Task<UpdateArtistResponse> ExecuteAsync(int id, UpdateArtistRequest request)
+    public async Task<UpdateArtistResponse> ExecuteAsync(Guid id, UpdateArtistRequest request)
     {
         var artist = await repository.GetByIdAsync(id);
         if (artist == null)

@@ -8,7 +8,7 @@ public class KpopHallDbContextFactory : IDesignTimeDbContextFactory<KpopHallDbCo
     public KpopHallDbContext CreateDbContext(string[] args)
     {
         var optionsBuilder = new DbContextOptionsBuilder<KpopHallDbContext>();
-        optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS05;Database=kpophalltest;Trusted_Connection=True;TrustServerCertificate=True;");
+        optionsBuilder.UseSqlServer("Server=CRISTIAN\\SQLEXPRESS;Database=kpophalltest;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=True;Connection Timeout=30;");
         return new KpopHallDbContext(optionsBuilder.Options);
     }
 }

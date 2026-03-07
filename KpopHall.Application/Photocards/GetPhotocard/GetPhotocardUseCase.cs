@@ -1,40 +1,25 @@
 ﻿using KpopHall.Application.Interfaces;
 using KpopHall.Domain.Exceptions;
-
 namespace KpopHall.Application.Photocards.GetPhotocard;
 
 public class GetPhotocardUseCase
 {
     private readonly IPhotoCardsRepository _photoCardRepository;
-    private readonly IAlbumsRepository _albumRepository;
-    private readonly IArtistsRepository _artistRepository;
-
-    public GetPhotocardUseCase(IPhotoCardsRepository photoCardRepository, IAlbumsRepository albumRepository, IArtistsRepository artistRepository)
+    public GetPhotocardUseCase(IPhotoCardsRepository photoCardRepository)
     {
         _photoCardRepository = photoCardRepository;
-        _albumRepository = albumRepository;
-        _artistRepository = artistRepository;
     }
-
-    public async Task<GetPhotocardResponse> ExecuteAsync( int artistId, int albumId, int photocardId)
+    public async Task<GetPhotocardResponse> ExecuteAsync(Guid id)
     {
-        var artist = await _artistRepository.GetByIdAsync(artistId);
-        if (artist == null)
-            throw new DomainException("Artist not found.");
-
-        var album = await _albumRepository.GetByIdAsync(albumId);
-        if (album == null || album.ArtistId != artistId)
-            throw new DomainException("Album not found.");
-
-        var photocard = await _photoCardRepository.GetByIdAsync(photocardId);
-        if (photocard == null || photocard.AlbumId != albumId)
+        var photocard = await _photoCardRepository.GetByIdAsync(id);
+        if (photocard == null)
             throw new DomainException("Photocard not found.");
-
         return new GetPhotocardResponse
         {
             Id = photocard.Id,
-            Name = photocard.Name,
+            Version = photocard.Version,
             AlbumId = photocard.AlbumId,
+            MemberId = photocard.MemberId,
             IsIrregular = photocard.IsIrregular,
             Store = photocard.DistributionContext?.Store,
             Region = photocard.DistributionContext?.Region,

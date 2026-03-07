@@ -13,6 +13,7 @@ public class KpopHallDbContext : DbContext
     public DbSet<Album> Albums => Set<Album>();
     public DbSet<Photocard> Photocards => Set<Photocard>();
     public DbSet<User> Users => Set<User>();
+    public DbSet<Member> Members => Set<Member>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -52,11 +53,11 @@ public class KpopHallDbContext : DbContext
         {
             entity.HasKey(p => p.Id);
 
-            entity.Property(p => p.Name)
+            entity.Property(p => p.Version)
                 .IsRequired()
                 .HasMaxLength(200);
 
-            entity.HasIndex(p => new { p.Name, p.AlbumId })
+            entity.HasIndex(p => new { p.Version, p.AlbumId })
                 .IsUnique();
 
             entity.HasOne<Album>()
@@ -98,6 +99,23 @@ public class KpopHallDbContext : DbContext
             
             entity.HasIndex(u => u.Email)
                 .IsUnique();
+        });
+
+        modelBuilder.Entity<Member>(entity =>
+        {
+            entity.HasKey(m => m.Id);
+
+            entity.Property(m => m.Name)
+                .IsRequired()
+                .HasMaxLength(200);
+
+            entity.HasIndex(m => new { m.Name, m.ArtistId })
+                .IsUnique();
+
+            entity.HasOne<Artist>()
+                .WithMany()
+                .HasForeignKey(m => m.ArtistId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
     }
 }

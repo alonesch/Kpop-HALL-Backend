@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KpopHall.Infrastructure.Migrations
 {
     [DbContext(typeof(KpopHallDbContext))]
-    [Migration("20260223161828_InitialCreate")]
+    [Migration("20260307051916_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -27,14 +27,12 @@ namespace KpopHall.Infrastructure.Migrations
 
             modelBuilder.Entity("KpopHall.Domain.Entities.Album", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ArtistId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ArtistId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -56,11 +54,9 @@ namespace KpopHall.Infrastructure.Migrations
 
             modelBuilder.Entity("KpopHall.Domain.Entities.Artist", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -77,14 +73,12 @@ namespace KpopHall.Infrastructure.Migrations
 
             modelBuilder.Entity("KpopHall.Domain.Entities.Photocard", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AlbumId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("AlbumId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -103,11 +97,9 @@ namespace KpopHall.Infrastructure.Migrations
 
             modelBuilder.Entity("KpopHall.Domain.Entities.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -164,8 +156,8 @@ namespace KpopHall.Infrastructure.Migrations
 
                     b.OwnsOne("KpopHall.Domain.Entities.DistributionContext", "DistributionContext", b1 =>
                         {
-                            b1.Property<int>("PhotocardId")
-                                .HasColumnType("int");
+                            b1.Property<Guid>("PhotocardId")
+                                .HasColumnType("uniqueidentifier");
 
                             b1.Property<string>("Event")
                                 .HasMaxLength(150)

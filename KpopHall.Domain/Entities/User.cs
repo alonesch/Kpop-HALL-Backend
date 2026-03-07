@@ -4,7 +4,7 @@ namespace KpopHall.Domain.Entities;
 
 public class User
 {
-    public int Id { get; private set; }
+    public Guid Id { get; private set; }
 
     public string Username { get; private set; } = null!;
     public string Email { get; private set; } = null!;

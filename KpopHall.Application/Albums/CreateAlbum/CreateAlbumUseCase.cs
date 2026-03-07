@@ -15,7 +15,7 @@ public class CreateAlbumUseCase
         _artistRepository = artistRepository;
     }
 
-    public async Task<CreateAlbumResponse> ExecuteAsync (int artistId, CreateAlbumRequest request)
+    public async Task<CreateAlbumResponse> ExecuteAsync (Guid artistId, CreateAlbumRequest request)
     {
         var artist = await _artistRepository.GetByIdAsync(artistId);
         if (artist == null)

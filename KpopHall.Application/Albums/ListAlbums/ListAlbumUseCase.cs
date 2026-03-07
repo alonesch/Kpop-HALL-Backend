@@ -14,7 +14,7 @@ public class ListAlbumsUseCase
         _artistRepository = artistRepository;
     }
 
-    public async Task<List<ListAlbumsResponse>> ExecuteAsync(int artistId)
+    public async Task<List<ListAlbumsResponse>> ExecuteAsync(Guid artistId)
     {
         var artist = await _artistRepository.GetByIdAsync(artistId);
         if (artist == null)

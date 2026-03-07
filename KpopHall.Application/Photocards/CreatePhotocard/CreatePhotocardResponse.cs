@@ -2,8 +2,9 @@
 
 public class  CreatePhotocardResponse
 {
-    public int Id { get; set; }
-    public string Name { get; set; } = null!;
-    public int AlbumId { get; set; }
+    public Guid Id { get; set; }
+    public string Version { get; set; } = null!;
+    public Guid AlbumId { get; set; }
+    public Guid MemberId { get; set; }
     public bool IsIrregular { get; set; }
 }

@@ -8,7 +8,7 @@ namespace KpopHall.Api.Controllers.v1;
 
 
 [ApiController]
-[Route("api/v1/artists/{artistId:int}/albums")]
+[Route("api/v1/artists/{artistId:Guid}/albums")]
 public class  AlbumController : ControllerBase
 {
     private readonly CreateAlbumUseCase _createUseCase;
@@ -23,9 +23,9 @@ public class  AlbumController : ControllerBase
     }
 
 
-    [Authorize]
+    
     [HttpPost]
-    public async Task<IActionResult> Create([FromRoute]int artistId, [FromBody]CreateAlbumRequest request)
+    public async Task<IActionResult> Create([FromRoute]Guid artistId, [FromBody]CreateAlbumRequest request)
     {
         var response = await _createUseCase.ExecuteAsync(artistId, request);
 
@@ -33,14 +33,14 @@ public class  AlbumController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> List([FromRoute]int artistId)
+    public async Task<IActionResult> List([FromRoute]Guid artistId)
     {
         var response = await _listAlbumsUseCase.ExecuteAsync(artistId);
         return Ok(response);
     }
 
-    [HttpGet("{albumId:int}")]
-    public async Task<IActionResult> GetById([FromRoute]int artistId, [FromRoute]int albumId)
+    [HttpGet("{albumId:Guid}")]
+    public async Task<IActionResult> GetById([FromRoute]Guid artistId, [FromRoute]Guid albumId)
     {
         var response = await _getByIdUseCase.ExecuteAsync(artistId, albumId);
         return Ok(response);

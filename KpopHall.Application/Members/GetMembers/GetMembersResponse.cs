@@ -1,8 +1,7 @@
 ﻿
-namespace KpopHall.Application.Artists.ListArtists;
-
-public class ListArtistsResponse
+public class GetMemberResponse
 {
     public Guid Id { get; set; }
     public string Name { get; set; } = null!;
+    public Guid ArtistId { get; set; }
 }
