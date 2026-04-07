@@ -100,7 +100,7 @@ builder.Services.AddCors(options =>
         policy
             .WithOrigins(
                 "http://localhost:3000",
-                "https://kpop-hall.vercel.app" //mocked
+                "https://kpop-hall.vercel.app"
             )
             .AllowAnyHeader()
             .AllowAnyMethod()
@@ -115,7 +115,10 @@ var app = builder.Build();
 
 app.UseMiddleware<KpopHall.Api.Middlewares.GlobalExceptionMiddleware>();
 
-app.UseHttpsRedirection();
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
 
 app.UseAuthentication();
 
