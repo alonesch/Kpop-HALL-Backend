@@ -1,0 +1,22 @@
+# Build artifacts
+**/bin/
+**/obj/
+
+# Visual Studio
+**/.vs/
+**/*.user
+**/*.suo
+
+# Git
+.git/
+.gitignore
+
+# Tests
+tests/
+
+# Logs
+**/*.log
+
+# Environment files
+**/.env
+**/appsettings.Development.json
