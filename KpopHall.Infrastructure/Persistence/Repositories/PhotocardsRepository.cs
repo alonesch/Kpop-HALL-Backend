@@ -23,7 +23,10 @@ public class PhotocardsRepository : IPhotoCardsRepository
     {
         return await _context.Photocards
             .AsNoTracking()
-            .Where(p => p.AlbumId == albumId)
+            .Include(p => p.Member)
+            .Include(p => p.Album)
+                .ThenInclude(a => a.Artist)
+            .Where( p => p.AlbumId == albumId)
             .ToListAsync();
     }
 
