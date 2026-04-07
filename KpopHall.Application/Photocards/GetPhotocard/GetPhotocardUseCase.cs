@@ -24,7 +24,10 @@ public class GetPhotocardUseCase
             Store = photocard.DistributionContext?.Store,
             Region = photocard.DistributionContext?.Region,
             Event = photocard.DistributionContext?.Event,
-            PrintQuantity = photocard.DistributionContext?.PrintQuantity
+            PrintQuantity = photocard.DistributionContext?.PrintQuantity,
+            FrontsideImageUrl = photocard.FrontsideImagePath,
+            BacksideImageUrl = photocard.BacksideImagePath
+
         };
     }
 }

@@ -8,6 +8,7 @@ public class Album
     public string Title { get; private set; } = null!;
     public int Year { get; private set; }
     public Guid ArtistId { get; private set; }
+    public Artist Artist { get; private set; } = null!;
     protected Album() { }
     public Album(string title, int year, Guid artistId)
     {

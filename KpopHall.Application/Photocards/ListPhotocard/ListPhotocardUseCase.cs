@@ -1,4 +1,5 @@
 ﻿using KpopHall.Application.Interfaces;
+using KpopHall.Domain.Entities;
 using KpopHall.Domain.Exceptions;
 namespace KpopHall.Application.Photocards.ListPhotocard;
 
@@ -44,11 +45,18 @@ public class ListPhotocardUseCase
             throw new DomainException("No photocards found for this member.");
         return photocards.Select(Map).ToList();
     }
-    private static ListPhotocardResponse Map(KpopHall.Domain.Entities.Photocard p) => new()
+    private static ListPhotocardResponse Map(Photocard p) => new()
     {
         Id = p.Id,
         Version = p.Version,
         MemberId = p.MemberId,
-        IsIrregular = p.IsIrregular
+        MemberName = p.Member.Name,
+        ArtistId = p.ArtistId,
+        ArtistName = p.Album.Artist.Name,
+        AlbumTitle = p.Album.Title,
+        IsIrregular = p.IsIrregular,
+        FrontsideImageUrl = p.FrontsideImagePath != null
+         ? $"https://cdn.kpophall.com/{p.FrontsideImagePath}"
+         : null
     };
 }

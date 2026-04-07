@@ -11,4 +11,6 @@ public class GetPhotocardResponse
     public string? Region { get; set; }
     public string? Event { get; set; }
     public int? PrintQuantity { get; set; }
+    public string? FrontsideImageUrl { get; set; }
+    public string? BacksideImageUrl { get; set; }
 }

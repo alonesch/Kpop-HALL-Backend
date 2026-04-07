@@ -52,3 +52,6 @@ publish/
 coverage/
 *.coverage
 *.coveragexml
+
+#Cache
+*.lscache

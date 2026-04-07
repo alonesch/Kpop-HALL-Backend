@@ -31,6 +31,9 @@ public class PhotocardsRepository : IPhotoCardsRepository
     {
         return await _context.Photocards
             .AsNoTracking()
+            .Include(p => p.Album)
+                .ThenInclude(a => a.Artist)
+             .Include(p => p.Member)
             .ToListAsync();
     }
 
@@ -38,6 +41,9 @@ public class PhotocardsRepository : IPhotoCardsRepository
     {
         return await _context.Photocards
             .AsNoTracking()
+            .Include(p => p.Album)
+                .ThenInclude(a => a.Artist)
+            .Include(p => p.Member)
             .FirstOrDefaultAsync(p => p.Id == id);
     }
 
@@ -51,8 +57,10 @@ public class PhotocardsRepository : IPhotoCardsRepository
     {
         return await _context.Photocards
             .AsNoTracking()
-            .Where(p => _context.Albums
-                .Any(a => a.Id == p.AlbumId && a.ArtistId == artistId))
+            .Include(p => p.Album)
+                .ThenInclude(a => a.Artist)
+            .Include(p => p.Member)
+            .Where(p => p.ArtistId == artistId)
             .ToListAsync();
     }
 
@@ -60,6 +68,9 @@ public class PhotocardsRepository : IPhotoCardsRepository
     {
         return await _context.Photocards
             .AsNoTracking()
+            .Include(p => p.Album)
+                .ThenInclude(a => a.Artist)
+            .Include(p => p.Member)
             .Where(p => p.MemberId == memberId)
             .ToListAsync();
     }

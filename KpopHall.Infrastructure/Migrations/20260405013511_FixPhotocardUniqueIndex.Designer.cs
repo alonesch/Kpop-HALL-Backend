@@ -4,6 +4,7 @@ using KpopHall.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KpopHall.Infrastructure.Migrations
 {
     [DbContext(typeof(KpopHallDbContext))]
-    partial class KpopHallDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260405013511_FixPhotocardUniqueIndex")]
+    partial class FixPhotocardUniqueIndex
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -125,8 +128,6 @@ namespace KpopHall.Infrastructure.Migrations
 
                     b.HasIndex("ArtistId");
 
-                    b.HasIndex("MemberId");
-
                     b.HasIndex("Version", "AlbumId", "MemberId")
                         .IsUnique();
 
@@ -209,13 +210,11 @@ namespace KpopHall.Infrastructure.Migrations
 
             modelBuilder.Entity("KpopHall.Domain.Entities.Album", b =>
                 {
-                    b.HasOne("KpopHall.Domain.Entities.Artist", "Artist")
+                    b.HasOne("KpopHall.Domain.Entities.Artist", null)
                         .WithMany()
                         .HasForeignKey("ArtistId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Artist");
                 });
 
             modelBuilder.Entity("KpopHall.Domain.Entities.Member", b =>
@@ -229,22 +228,10 @@ namespace KpopHall.Infrastructure.Migrations
 
             modelBuilder.Entity("KpopHall.Domain.Entities.Photocard", b =>
                 {
-                    b.HasOne("KpopHall.Domain.Entities.Album", "Album")
+                    b.HasOne("KpopHall.Domain.Entities.Album", null)
                         .WithMany()
                         .HasForeignKey("AlbumId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("KpopHall.Domain.Entities.Artist", "Artist")
-                        .WithMany()
-                        .HasForeignKey("ArtistId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("KpopHall.Domain.Entities.Member", "Member")
-                        .WithMany()
-                        .HasForeignKey("MemberId")
-                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.OwnsOne("KpopHall.Domain.Entities.DistributionContext", "DistributionContext", b1 =>
@@ -276,13 +263,7 @@ namespace KpopHall.Infrastructure.Migrations
                                 .HasForeignKey("PhotocardId");
                         });
 
-                    b.Navigation("Album");
-
-                    b.Navigation("Artist");
-
                     b.Navigation("DistributionContext");
-
-                    b.Navigation("Member");
                 });
 
             modelBuilder.Entity("KpopHall.Domain.Entities.RefreshToken", b =>
