@@ -9,4 +9,5 @@ public interface IUsersRepository
     Task<User?> GetByUsernameAsync(string username);
     Task<bool> ExistsByEmailAsync(string email);
     Task<bool> ExistsByUsernameAsync(string username);
+    Task<User?> GetByEmailOrUsernameAsync(string email, string username);
 }

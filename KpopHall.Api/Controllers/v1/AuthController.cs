@@ -33,11 +33,12 @@ public class AuthController : ControllerBase
     {
         var token = await _loginUseCase.ExecuteAsync(
             request.Email,
+            request.Username,
             request.Password);
 
         return Ok(new { token });
     }
-    
+
     [HttpPost("refresh")]
     public async Task<IActionResult> Refresh(
     [FromBody] RefreshUserRequest request,

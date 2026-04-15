@@ -19,12 +19,12 @@ public class LoginUseCase
         _tokenGenerator = tokenGenerator;
     }
 
-    public async Task<string> ExecuteAsync(string email, string password)
+    public async Task<string> ExecuteAsync(string email,string username,string password)
     {
-        var user = await _userRepository.GetByEmailAsync(email);
+        var user = await _userRepository.GetByEmailOrUsernameAsync(email, username);
 
-        if (user is null || !user.IsActive)
-            throw new DomainException("Invalid credentials.");
+        //if (user is null || !user.IsActive)
+        //    throw new DomainException("Invalid credentials.");
 
         if (!_passwordHasher.Verify(password, user.PasswordHash))
             throw new DomainException("Invalid credentials.");

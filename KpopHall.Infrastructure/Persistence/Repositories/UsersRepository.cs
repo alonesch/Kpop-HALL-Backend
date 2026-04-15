@@ -46,4 +46,20 @@ public class UsersRepository : IUsersRepository
         return await _context.Users
             .FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
     }
+    public async Task<User?> GetByEmailOrUsernameAsync(string email, string username)
+    {
+        if (string.IsNullOrWhiteSpace(email))
+        {
+            return await _context.Users
+                .FirstOrDefaultAsync(u => u.Username == username);
+
+        }
+        if (string.IsNullOrWhiteSpace(username))
+        {
+            return await _context.Users
+                .FirstOrDefaultAsync(u => u.Email == email);
+        }
+        return await _context.Users
+            .FirstOrDefaultAsync(u => u.Email == email || u.Username == username);
+    }
 }

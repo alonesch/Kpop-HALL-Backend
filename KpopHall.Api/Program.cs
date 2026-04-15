@@ -19,6 +19,7 @@ using KpopHall.Infrastructure.Persistence;
 using KpopHall.Infrastructure.Persistence.Repositories;
 using KpopHall.Infrastructure.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Connections;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -28,9 +29,12 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 //DI Db
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<KpopHallDbContext>(options =>
-    options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(connectionString));
+Console.WriteLine($"Connection String: {connectionString}");
+
+
 
 // Dependency Injection
 builder.Services.AddScoped<ListArtistsUseCase>();
