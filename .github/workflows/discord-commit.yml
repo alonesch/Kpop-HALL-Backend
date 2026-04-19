@@ -13,17 +13,19 @@ jobs:
 
       - name: Send commit to Discord
         run: |
-          MESSAGE=$(cat <<EOF
-🚀 Novo commit
-
-📦 Repo: ${{ github.repository }}
-🌿 Branch: ${{ github.ref_name }}
-👤 Autor: ${{ github.actor }}
-📝 Mensagem: ${{ github.event.head_commit.message }}
-🔗 Commit: ${{ github.event.head_commit.url }}
-EOF
-)
-
-          curl -H "Content-Type: application/json" \
-          -d "$(jq -n --arg content "$MESSAGE" '{content: $content}')" \
-          ${{ secrets.DISCORD_WEBHOOK }}
+          jq -n \
+            --arg repo "${{ github.repository }}" \
+            --arg branch "${{ github.ref_name }}" \
+            --arg author "${{ github.actor }}" \
+            --arg message "${{ github.event.head_commit.message }}" \
+            --arg url "${{ github.event.head_commit.url }}" \
+            '{
+              content: "🚀 Novo commit\n\n📦 Repo: " + $repo +
+                       "\n🌿 Branch: " + $branch +
+                       "\n👤 Autor: " + $author +
+                       "\n📝 Mensagem: " + $message +
+                       "\n🔗 Commit: " + $url
+            }' \
+          | curl -H "Content-Type: application/json" \
+                 -d @- \
+                 ${{ secrets.DISCORD_WEBHOOK }}
