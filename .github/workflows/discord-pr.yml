@@ -1,0 +1,91 @@
+name: Discord PR Notifications
+
+on:
+  pull_request:
+    types: [opened, closed, reopened, ready_for_review, review_requested]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    # Ignora PRs em draft no evento "opened"
+    if: ${{ !(github.event.action == 'opened' && github.event.pull_request.draft) }}
+
+    steps:
+      - name: Build payload and send to Discord
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_PRS }}
+          ACTION: ${{ github.event.action }}
+          MERGED: ${{ github.event.pull_request.merged }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
+          PR_AUTHOR_AVATAR: ${{ github.event.pull_request.user.avatar_url }}
+          PR_BASE: ${{ github.event.pull_request.base.ref }}
+          PR_HEAD: ${{ github.event.pull_request.head.ref }}
+          REPO_NAME: ${{ github.repository }}
+          REQUESTED_REVIEWER: ${{ github.event.requested_reviewer.login }}
+        run: |
+          # Define título e cor com base no evento/estado
+          case "$ACTION" in
+            opened)
+              TITLE="🟦 Pull Request aberto"
+              COLOR=3447003   # azul
+              ;;
+            reopened)
+              TITLE="🟪 Pull Request reaberto"
+              COLOR=10181046  # roxo
+              ;;
+            ready_for_review)
+              TITLE="🟨 Pull Request pronto para review"
+              COLOR=16776960  # amarelo
+              ;;
+            review_requested)
+              TITLE="🟧 Review solicitado para @${REQUESTED_REVIEWER}"
+              COLOR=15105570  # laranja
+              ;;
+            closed)
+              if [ "$MERGED" = "true" ]; then
+                TITLE="🟩 Pull Request mergeado"
+                COLOR=3066993  # verde
+              else
+                TITLE="🟥 Pull Request fechado sem merge"
+                COLOR=15158332 # vermelho
+              fi
+              ;;
+            *)
+              TITLE="ℹ️ Evento de PR: $ACTION"
+              COLOR=9807270   # cinza
+              ;;
+          esac
+
+          DESCRIPTION="**[#${PR_NUMBER}] ${PR_TITLE}**"
+          BRANCHES="\`${PR_HEAD}\` → \`${PR_BASE}\`"
+
+          PAYLOAD=$(jq -n \
+            --arg title       "$TITLE" \
+            --arg description "$DESCRIPTION" \
+            --arg url         "$PR_URL" \
+            --argjson color   "$COLOR" \
+            --arg author      "$PR_AUTHOR" \
+            --arg avatar      "$PR_AUTHOR_AVATAR" \
+            --arg repo        "$REPO_NAME" \
+            --arg branches    "$BRANCHES" \
+            '{
+              embeds: [{
+                title: $title,
+                description: $description,
+                url: $url,
+                color: $color,
+                author: { name: $author, icon_url: $avatar },
+                fields: [
+                  { name: "Repositório", value: $repo,     inline: true },
+                  { name: "Branches",    value: $branches, inline: true }
+                ],
+                timestamp: (now | todateiso8601)
+              }]
+            }')
+
+          echo "$PAYLOAD" | curl -sS -X POST \
+            -H "Content-Type: application/json" \
+            -d @- "$DISCORD_WEBHOOK"
