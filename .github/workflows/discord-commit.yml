@@ -6,9 +6,26 @@ on:
 jobs:
   notify:
     runs-on: ubuntu-latest
+
     steps:
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+
       - name: Send commit to Discord
         run: |
-          curl -H "Content-Type: application/json" \
-          -d "{\"content\": \"🚀 Novo commit em ${{ github.repository }} por ${{ github.actor }}\"}" \
-          ${{ secrets.DISCORD_WEBHOOK }}
+          jq -n \
+            --arg repo "${{ github.repository }}" \
+            --arg branch "${{ github.ref_name }}" \
+            --arg author "${{ github.actor }}" \
+            --arg message "${{ github.event.head_commit.message }}" \
+            --arg url "${{ github.event.head_commit.url }}" \
+            '{
+              content: "🚀 Novo commit\n\n📦 Repo: " + $repo +
+                       "\n🌿 Branch: " + $branch +
+                       "\n👤 Autor: " + $author +
+                       "\n📝 Mensagem: " + $message +
+                       "\n🔗 Commit: " + $url
+            }' \
+          | curl -H "Content-Type: application/json" \
+                 -d @- \
+                 ${{ secrets.DISCORD_WEBHOOK }}
